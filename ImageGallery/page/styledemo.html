@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Style Demo</title>
+    <script>
+        function styleHeaderSiblings() {
+            if (!document.getElementsByTagName) return
+
+            var headers = document.getElementsByTagName("h1")
+            for (var i=0; i<headers.length; i++) {
+                var elem = getNextElement(headers[i].nextSibling)
+                elem.style.fontWeight = "bold"
+                elem.style.fontSize = "1.2em"
+            }
+        }
+
+        function getNextElement(node) {
+            if (node.nodeType == 1) return node
+
+            if (node.nextSibling) {
+                return getNextElement(node.nextSibling)
+            }
+
+            return null
+        }
+
+        function stripeTabls() {
+            if (!document.getElementsByTagName) return
+
+            var tables = document.getElementsByTagName("table")
+            var odd, rows
+            for (var i=0; i<tables.length; i++) {
+                odd = false
+                rows = tables[i].getElementsByTagName("tr")
+                for (var j=0; j<rows.length; j++) {
+                    if (odd == true) {
+                        rows[j].style.backgroundColor = "#ffc"
+                        odd = false
+                    } else {
+                        rows[i].style.backgroundColor = "#fff"
+                        odd = true
+                    }
+                }
+            }
+        }
+
+        function highlightRows() {
+            if (!document.getElementsByTagName) return
+
+            var rows = document.getElementsByTagName("tr")
+            for (var i=0; i<rows.length; i++) {
+                rows[i].onmouseover = function () {
+                    this.style.fontWeight = "bold"
+                }
+                rows[i].onmouseout = function () {
+                    this.style.fontWeight = "normal"
+                }
+            }
+        }
+
+        function addClass(element, value) {
+            if (!element.className) {
+                element.className = value
+            } else {
+                var newClassName = element.className
+                newClassName += " "
+                newClassName += value
+                element.className = newClassName
+            }
+        }
+
+        window.onload = function () {
+            var para = document.getElementById("example")
+            //alert("The color is " + para.style.color)
+            //alert("The font family is " + para.style.fontFamily)
+            para.style.color = "black"
+            para.style.font = "2em 'Times', serif"
+
+            styleHeaderSiblings()
+            highlightRows()
+        }
+    </script>
+    <STYLE>
+        body {
+            font-family: "Helvetica", "Arial", sans-serif;
+            background-color: #fff;
+            color: #000;
+        }
+
+        table {
+            margin: auto;
+            border: 1px solid #699;
+        }
+
+        caption {
+            margin: auto;
+            padding: .2em;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        th {
+            font-weight: normal;
+            font-style: italic;
+            text-align: left;
+            border: 1px dotted #699;
+            background-color: #9cc;
+            color: #000;
+        }
+
+        th, td {
+            width: 10em;
+            padding: .5em;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffc;
+        }
+
+        tr:hover {
+            background-color: #cc6600;
+        }
+    </STYLE>
+</head>
+<body>
+    <p id="example" style="color: grey;font-family: 'Arial',sans-serif;">An example of a paragraph</p>
+    <h1>Hold the front page</h1>
+    <p>This first paragraph leads you in</p>
+    <p>Now you get the nitty-gritty of the story</p>
+    <p>The most important information is delivered first</p>
+    <h1>Extra! Extra!</h1>
+    <p>Funther developments are unfolding</p>
+    <p>You can read all about it here</p>
+
+    <table>
+        <caption>Itinerary</caption>
+        <thread>
+            <tr>
+                <th>When</th>
+                <th>Where</th>
+            </tr>
+        </thread>
+        <tbody>
+            <tr>
+                <td>June 9th</td>
+                <td>Portland, <abbr title="Oregon">OR</abbr></td>
+            </tr>
+            <tr>
+                <td>June 10th</td>
+                <td>Seattle, <abbr title="Washington">WA</abbr></td>
+            </tr>
+            <tr>
+                <td>June 12th</td>
+                <td>Sacramento, <abbr title="California">CA</abbr></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

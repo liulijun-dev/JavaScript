@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5 Demo</title>
+    <script rel="../script/showPic.js"></script>
+    <script>
+        function converToGS(img) {
+            img.color = img.src
+            img.grayscale = createGSCanvas(img)
+            img.onmouseover = function () {
+                this.src = this.color
+            }
+            img.onmouseout = function () {
+                this.src = this.grayscale
+            }
+            img.onmouseout
+
+        }
+
+        function createGSCanvas(img) {
+            var canvas = document.createElement("canvas")
+            canvas.width = img.width
+            canvas.height = img.height
+
+            var ctx = canvas.getContext("2d")
+            ctx.drawImage(img, 0, 0)
+
+            var imageData = ctx.getImageData(0, 0, img.width, img.height)
+            for(i=0; i<imageData.height; i++) {
+                for(j=0; j<imageData.width; j++) {
+                    var x = (i*4) * imageData.width + (j*4)
+                    var r = imageData.data[x]
+                    var g = imageData.data[x+1]
+                    var b = imageData.data[x+2]
+                    imageData.data[x] = imageData.data[x+1] = imageData.data[x+2] = (r+g+b)/3
+                }
+            }
+            ctx.putImageData(imageData, 0, 0, 0, 0, imageData.width, imageData.height)
+            return canvas.toDataURL()
+        }
+        window.onload = function () {
+            converToGS(document.getElementById("avatar"))
+        }
+    </script>
+</head>
+<body>
+<img src="../images/floor.jpg" id="avatar" title="A Tree" width="200px" height="200px">
+<div class="video-wrapper">
+    <video id="movie" controls width="200px">
+        <source src="../images/test.mp4">
+    </video>
+</div>
+<input type="email"></br>
+<input type="range" min="0" max="10" step="1"></br>
+<input type="text" placeholder="Your First Name">
+</body>
+</html>

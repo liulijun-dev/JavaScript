@@ -146,12 +146,85 @@ function onLoad() {
       // The first runs when the promise resolves, with the request.response
       // specified within the resolve() method.
       // image.src = window.URL.createObjectURL(response);
-      image.src = response
+      image.src = response;
       // The second runs when the promise
       // is rejected, and logs the Error specified with the reject() method.
     }, function(error) {
-      alert(error)
+      alert(error);
     });
+  }
+
+  document.getElementById("btn_test_for_in").onclick = function () {
+    let obj = {
+      name:"JavaScript",
+      age: 12,
+      hello: function () {
+        alert("Hello JavaScript");
+      }
+    };
+
+    let properties = "";
+
+    for(let property in obj) {
+      alert(`propertyName: ${property}, propertyValue: ${obj[property]}`);
+    }
+  }
+
+  document.getElementById("btn_test_for_of").onclick = function () {
+    let arrays = [1,2,3];
+    for(let ele of arrays) {
+      alert(ele);
+    }
+  }
+
+  document.getElementById("btn_test_arguments").onclick = function () {
+    function concat(separator) {
+      let result = "";
+      for(let i=1; i<arguments.length; i++) {
+        result = result + arguments[i] + separator;
+      }
+      return result.substring(0, result.length-1);
+    }
+
+    alert(concat(",", "hello", "world"))
+  }
+
+  document.getElementById("btn_test_residue_parameters").onclick = function () {
+    function concat(separator, ...str) {
+      let result = "";
+      for (let ele of str) {
+        result = result + ele + separator;
+      }
+      return result.substring(0, result.length-1);
+    }
+
+    alert(concat(",", "hi", "javascript"))
+  }
+
+  document.getElementById("btn_test_arrow_function").onclick = function () {
+    const a = [
+      "Hydrogen",
+      "Helium",
+      "Lithium",
+      "Beryllium"
+    ];
+
+    let result = a.map(it => it.length)
+    alert(result)
+  }
+
+  document.getElementById("btn_test_this_in_arrow_function").onclick = function () {
+    // 这是个对象方法
+    function Person() {
+      this.age = 10;
+
+      // 这里的`this`正确地指向person对象
+      setTimeout(()=>this.age++, 1000);
+    }
+
+    let person = new Person();
+    setTimeout(()=>alert(person.age), 1000)
+    //alert(person.age)
   }
 }
 
